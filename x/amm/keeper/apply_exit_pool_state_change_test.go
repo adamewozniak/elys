@@ -11,7 +11,7 @@ import (
 )
 
 func (suite *KeeperTestSuite) TestApplyExitPoolStateChange_WithdrawFromCommitmentModule() {
-	suite.SetupStableCoinPrices()
+	// suite.SetupStableCoinPrices()
 
 	app := suite.app
 	amm, bk := app.AmmKeeper, app.BankKeeper

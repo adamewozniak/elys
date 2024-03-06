@@ -29,10 +29,10 @@ func TestUpdatePoolMultiplierInfo(t *testing.T) {
 	app := simapp.InitElysTestApp(initChain)
 	ctx := app.BaseApp.NewContext(initChain, tmproto.Header{})
 
-	ik, amm, oracle, bk, ck := app.IncentiveKeeper, app.AmmKeeper, app.OracleKeeper, app.BankKeeper, app.CommitmentKeeper
+	ik, amm, _, bk, ck := app.IncentiveKeeper, app.AmmKeeper, app.OracleKeeper, app.BankKeeper, app.CommitmentKeeper
 
 	// Setup coin prices
-	SetupStableCoinPrices(ctx, oracle)
+	// SetupStableCoinPrices(ctx, oracle)
 
 	// Generate 1 random account with 1000stake balanced
 	addr := simapp.AddTestAddrs(app, ctx, 1, sdk.NewInt(100010))

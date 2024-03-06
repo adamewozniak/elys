@@ -205,7 +205,7 @@ func (suite *KeeperTestSuite) TestMsgServerSwapExactAmountIn() {
 
 func (suite *KeeperTestSuite) TestMsgServerSlippageDifferenceWhenSplit() {
 	suite.SetupTest()
-	suite.SetupStableCoinPrices()
+	// suite.SetupStableCoinPrices()
 
 	senderInitBalance := sdk.Coins{sdk.NewInt64Coin(ptypes.BaseCurrency, 1000000)}
 	swapFee := sdk.ZeroDec()

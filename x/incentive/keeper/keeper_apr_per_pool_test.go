@@ -16,10 +16,10 @@ func TestAPRCalculationPerPool(t *testing.T) {
 	app := simapp.InitElysTestApp(initChain)
 	ctx := app.BaseApp.NewContext(initChain, tmproto.Header{})
 
-	ik, amm, oracle := app.IncentiveKeeper, app.AmmKeeper, app.OracleKeeper
+	ik, amm, _ := app.IncentiveKeeper, app.AmmKeeper, app.OracleKeeper
 
 	// Setup coin prices
-	SetupStableCoinPrices(ctx, oracle)
+	// SetupStableCoinPrices(ctx, oracle)
 
 	// Generate 1 random account with 1000stake balanced
 	addr := simapp.AddTestAddrs(app, ctx, 2, sdk.NewInt(1000000))

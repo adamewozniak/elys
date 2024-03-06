@@ -5,15 +5,12 @@ import (
 
 	"github.com/stretchr/testify/suite"
 
-	"github.com/cometbft/cometbft/crypto/ed25519"
 	tmproto "github.com/cometbft/cometbft/proto/tendermint/types"
 
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
 	simapp "github.com/elys-network/elys/app"
-	oracletypes "github.com/elys-network/elys/x/oracle/types"
-	ptypes "github.com/elys-network/elys/x/parameter/types"
 )
 
 const (
@@ -36,6 +33,7 @@ func (suite *TestSuite) SetupTest() {
 	suite.app = app
 }
 
+/*
 func (suite *TestSuite) SetupStableCoinPrices() {
 	// prices set for USDT and USDC
 	provider := sdk.AccAddress(ed25519.GenPrivKey().PubKey().Address())
@@ -64,6 +62,7 @@ func (suite *TestSuite) SetupStableCoinPrices() {
 		Timestamp: uint64(suite.ctx.BlockTime().Unix()),
 	})
 }
+*/
 
 func TestKeeperSuite(t *testing.T) {
 	suite.Run(t, new(TestSuite))

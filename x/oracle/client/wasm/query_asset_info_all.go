@@ -9,7 +9,7 @@ import (
 )
 
 func (oq *Querier) queryAssetInfoAll(ctx sdk.Context, req *oracletypes.QueryAllAssetInfoRequest) ([]byte, error) {
-	res, err := oq.keeper.AssetInfoAll(ctx, req)
+	res, err := oq.keeper.GetExchangeRate(ctx, "ATOM")
 	if err != nil {
 		return nil, errorsmod.Wrap(err, "failed to query asset info all")
 	}

@@ -270,7 +270,10 @@ func (p *Pool) TVL(ctx sdk.Context, oracleKeeper OracleKeeper) (sdk.Dec, error) 
 	totalWeight := sdk.ZeroInt()
 	oracleAssetsWeight := sdk.ZeroInt()
 	for _, asset := range p.PoolAssets {
-		tokenPrice := oracleKeeper.GetAssetPriceFromDenom(ctx, asset.Token.Denom)
+		tokenPrice, err := oracleKeeper.GetExchangeRate(ctx, asset.Token.Denom)
+		if err != nil {
+			return sdk.ZeroDec(), err
+		}
 		totalWeight = totalWeight.Add(asset.Weight)
 		if tokenPrice.IsZero() {
 			if p.PoolParams.UseOracle {

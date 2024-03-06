@@ -98,7 +98,10 @@ func CalcExitPool(ctx sdk.Context, oracleKeeper OracleKeeper, pool Pool, account
 
 	if pool.PoolParams.UseOracle && tokenOutDenom != "" {
 		initialWeightDistance := pool.WeightDistanceFromTarget(ctx, oracleKeeper, pool.PoolAssets)
-		tokenPrice := oracleKeeper.GetAssetPriceFromDenom(ctx, tokenOutDenom)
+		tokenPrice, err := oracleKeeper.GetExchangeRate(ctx, tokenOutDenom)
+		if err != nil {
+			return sdk.Coins{}, err
+		}
 		exitValueWithoutSlippage, err := CalcExitValueWithoutSlippage(ctx, oracleKeeper, accountedPoolKeeper, pool, exitingShares, tokenOutDenom)
 		if err != nil {
 			return sdk.Coins{}, err

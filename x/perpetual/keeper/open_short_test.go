@@ -391,10 +391,10 @@ func TestOpenShort_BaseCurrency_Collateral(t *testing.T) {
 	app := simapp.InitElysTestApp(true)
 	ctx := app.BaseApp.NewContext(true, tmproto.Header{})
 
-	mk, amm, oracle := app.PerpetualKeeper, app.AmmKeeper, app.OracleKeeper
+	mk, amm, _ := app.PerpetualKeeper, app.AmmKeeper, app.OracleKeeper
 
 	// Setup coin prices
-	SetupStableCoinPrices(ctx, oracle)
+	// SetupStableCoinPrices(ctx, oracle)
 
 	// Set asset profile
 	app.AssetprofileKeeper.SetEntry(ctx, assetprofiletypes.Entry{
@@ -540,10 +540,10 @@ func TestOpenShort_ATOM_Collateral(t *testing.T) {
 	app := simapp.InitElysTestApp(true)
 	ctx := app.BaseApp.NewContext(true, tmproto.Header{})
 
-	mk, amm, oracle := app.PerpetualKeeper, app.AmmKeeper, app.OracleKeeper
+	mk, amm, _ := app.PerpetualKeeper, app.AmmKeeper, app.OracleKeeper
 
 	// Setup coin prices
-	SetupStableCoinPrices(ctx, oracle)
+	// SetupStableCoinPrices(ctx, oracle)
 
 	// Generate 1 random account with 1000stake balanced
 	addr := simapp.AddTestAddrs(app, ctx, 1, sdk.NewInt(1000000000000))

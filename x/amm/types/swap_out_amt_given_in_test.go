@@ -168,7 +168,7 @@ func (suite *TestSuite) TestOraclePoolNormalizedWeights() {
 			suite.ctx = suite.ctx.WithBlockTime(now)
 
 			// prices set for USDT and USDC
-			suite.SetupStableCoinPrices()
+			// suite.SetupStableCoinPrices()
 
 			// execute function
 			weights, err := types.OraclePoolNormalizedWeights(suite.ctx, suite.app.OracleKeeper, tc.poolAssets)
@@ -298,7 +298,7 @@ func (suite *TestSuite) TestNewPoolAssetsAfterSwap() {
 			treasuryAddr := sdk.AccAddress(ed25519.GenPrivKey().PubKey().Address())
 
 			// prices set for USDT and USDC
-			suite.SetupStableCoinPrices()
+			// suite.SetupStableCoinPrices()
 
 			// execute function
 			pool := types.Pool{
@@ -398,7 +398,7 @@ func (suite *TestSuite) TestWeightDistanceFromTarget() {
 			treasuryAddr := sdk.AccAddress(ed25519.GenPrivKey().PubKey().Address())
 
 			// prices set for USDT and USDC
-			suite.SetupStableCoinPrices()
+			// suite.SetupStableCoinPrices()
 
 			// execute function
 			pool := types.Pool{
@@ -581,7 +581,7 @@ func (suite *TestSuite) TestSwapOutAmtGivenIn() {
 			treasuryAddr := sdk.AccAddress(ed25519.GenPrivKey().PubKey().Address())
 
 			// prices set for USDT and USDC
-			suite.SetupStableCoinPrices()
+			// suite.SetupStableCoinPrices()
 
 			// execute function
 			pool := types.Pool{

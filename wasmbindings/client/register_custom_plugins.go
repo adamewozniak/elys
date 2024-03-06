@@ -27,7 +27,6 @@ import (
 	leveragelpclientwasm "github.com/elys-network/elys/x/leveragelp/client/wasm"
 	leveragelpkeeper "github.com/elys-network/elys/x/leveragelp/keeper"
 	oracleclientwasm "github.com/elys-network/elys/x/oracle/client/wasm"
-	oraclekeeper "github.com/elys-network/elys/x/oracle/keeper"
 	parameterclientwasm "github.com/elys-network/elys/x/parameter/client/wasm"
 	parameterkeeper "github.com/elys-network/elys/x/parameter/keeper"
 	perpetualclientwasm "github.com/elys-network/elys/x/perpetual/client/wasm"
@@ -38,6 +37,7 @@ import (
 	tokenomicskeeper "github.com/elys-network/elys/x/tokenomics/keeper"
 	transferhookclientwasm "github.com/elys-network/elys/x/transferhook/client/wasm"
 	transferhookkeeper "github.com/elys-network/elys/x/transferhook/keeper"
+	oraclekeeper "github.com/ojo-network/ojo/x/oracle/keeper"
 )
 
 func RegisterCustomPlugins(

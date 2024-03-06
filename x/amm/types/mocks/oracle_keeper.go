@@ -24,12 +24,12 @@ func (_m *OracleKeeper) EXPECT() *OracleKeeper_Expecter {
 }
 
 // GetAssetPrice provides a mock function with given fields: ctx, asset
-func (_m *OracleKeeper) GetAssetPrice(ctx types.Context, asset string) (oracletypes.Price, bool) {
+func (_m *OracleKeeper) GetExchangeRate(ctx types.Context, asset string)(math.LegacyDec, error) {
 	ret := _m.Called(ctx, asset)
 
 	var r0 oracletypes.Price
 	var r1 bool
-	if rf, ok := ret.Get(0).(func(types.Context, string) (oracletypes.Price, bool)); ok {
+	if rf, ok := ret.Get(0).(func(types.Context, string) (math.LegacyDec, error)); ok {
 		return rf(ctx, asset)
 	}
 	if rf, ok := ret.Get(0).(func(types.Context, string) oracletypes.Price); ok {
@@ -44,7 +44,10 @@ func (_m *OracleKeeper) GetAssetPrice(ctx types.Context, asset string) (oraclety
 		r1 = ret.Get(1).(bool)
 	}
 
-	return r0, r1
+	if(r1) {
+		return r0.Price, nil
+	}
+	return r0.Price, nil
 }
 
 // OracleKeeper_GetAssetPrice_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'GetAssetPrice'

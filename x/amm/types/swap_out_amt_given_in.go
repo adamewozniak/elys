@@ -33,7 +33,10 @@ func OraclePoolNormalizedWeights(ctx sdk.Context, oracleKeeper OracleKeeper, poo
 	oraclePoolWeights := []AssetWeight{}
 	totalWeight := sdk.ZeroDec()
 	for _, asset := range poolAssets {
-		tokenPrice := oracleKeeper.GetAssetPriceFromDenom(ctx, asset.Token.Denom)
+		tokenPrice, err := oracleKeeper.GetExchangeRate(ctx, asset.Token.Denom)
+		if err != nil {
+			return oraclePoolWeights, err
+		}
 		if tokenPrice.IsZero() {
 			return oraclePoolWeights, fmt.Errorf("price for token not set: %s", asset.Token.Denom)
 		}
@@ -146,11 +149,17 @@ func (p Pool) CalcGivenInSlippage(
 	}
 
 	// ensure token prices for in/out tokens set properly
-	inTokenPrice := oracleKeeper.GetAssetPriceFromDenom(ctx, tokenIn.Denom)
+	inTokenPrice, err := oracleKeeper.GetExchangeRate(ctx, tokenIn.Denom)
+	if err != nil {
+		return sdk.ZeroDec(), err
+	}
 	if inTokenPrice.IsZero() {
 		return sdk.ZeroDec(), fmt.Errorf("price for inToken not set: %s", poolAssetIn.Token.Denom)
 	}
-	outTokenPrice := oracleKeeper.GetAssetPriceFromDenom(ctx, tokenOutDenom)
+	outTokenPrice, err := oracleKeeper.GetExchangeRate(ctx, tokenOutDenom)
+	if err != nil {
+		return sdk.ZeroDec(), err
+	}
 	if outTokenPrice.IsZero() {
 		return sdk.ZeroDec(), fmt.Errorf("price for outToken not set: %s", poolAssetOut.Token.Denom)
 	}
@@ -194,11 +203,17 @@ func (p *Pool) SwapOutAmtGivenIn(
 	}
 
 	// ensure token prices for in/out tokens set properly
-	inTokenPrice := oracleKeeper.GetAssetPriceFromDenom(ctx, tokenIn.Denom)
+	inTokenPrice, err := oracleKeeper.GetExchangeRate(ctx, tokenIn.Denom)
+	if err != nil {
+		return sdk.Coin{}, sdk.ZeroDec(), sdk.ZeroDec(), sdk.ZeroDec(), err
+	}
 	if inTokenPrice.IsZero() {
 		return sdk.Coin{}, sdk.ZeroDec(), sdk.ZeroDec(), sdk.ZeroDec(), fmt.Errorf("price for inToken not set: %s", poolAssetIn.Token.Denom)
 	}
-	outTokenPrice := oracleKeeper.GetAssetPriceFromDenom(ctx, tokenOutDenom)
+	outTokenPrice, err := oracleKeeper.GetExchangeRate(ctx, tokenOutDenom)
+	if err != nil {
+		return sdk.Coin{}, sdk.ZeroDec(), sdk.ZeroDec(), sdk.ZeroDec(), err
+	}
 	if outTokenPrice.IsZero() {
 		return sdk.Coin{}, sdk.ZeroDec(), sdk.ZeroDec(), sdk.ZeroDec(), fmt.Errorf("price for outToken not set: %s", poolAssetOut.Token.Denom)
 	}

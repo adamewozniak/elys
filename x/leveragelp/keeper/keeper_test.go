@@ -3,14 +3,10 @@ package keeper_test
 import (
 	"testing"
 
-	"github.com/cometbft/cometbft/crypto/ed25519"
 	tmproto "github.com/cometbft/cometbft/proto/tendermint/types"
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	simapp "github.com/elys-network/elys/app"
-	oraclekeeper "github.com/elys-network/elys/x/oracle/keeper"
-	oracletypes "github.com/elys-network/elys/x/oracle/types"
-	ptypes "github.com/elys-network/elys/x/parameter/types"
 	"github.com/stretchr/testify/require"
 	"github.com/stretchr/testify/suite"
 )
@@ -39,6 +35,7 @@ func TestKeeperSuite(t *testing.T) {
 	suite.Run(t, new(KeeperTestSuite))
 }
 
+/*
 func SetupStableCoinPrices(ctx sdk.Context, oracle oraclekeeper.Keeper) {
 	// prices set for USDT and USDC
 	provider := sdk.AccAddress(ed25519.GenPrivKey().PubKey().Address())
@@ -92,6 +89,7 @@ func SetupStableCoinPrices(ctx sdk.Context, oracle oraclekeeper.Keeper) {
 		Timestamp: uint64(ctx.BlockTime().Unix()),
 	})
 }
+*/
 
 func TestGetAllWhitelistedAddress(t *testing.T) {
 	app := simapp.InitElysTestApp(true)

@@ -13,12 +13,12 @@ import (
 	epochskeeper "github.com/elys-network/elys/x/epochs/keeper"
 	incentivekeeper "github.com/elys-network/elys/x/incentive/keeper"
 	leveragelpkeeper "github.com/elys-network/elys/x/leveragelp/keeper"
-	oraclekeeper "github.com/elys-network/elys/x/oracle/keeper"
 	parameterkeeper "github.com/elys-network/elys/x/parameter/keeper"
 	perpetualkeeper "github.com/elys-network/elys/x/perpetual/keeper"
 	stablestakekeeper "github.com/elys-network/elys/x/stablestake/keeper"
 	tokenomicskeeper "github.com/elys-network/elys/x/tokenomics/keeper"
 	transferhookkeeper "github.com/elys-network/elys/x/transferhook/keeper"
+	oraclekeeper "github.com/ojo-network/ojo/x/oracle/keeper"
 )
 
 // NewQueryPlugin returns a reference to a new QueryPlugin.

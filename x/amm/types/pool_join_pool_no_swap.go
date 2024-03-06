@@ -20,7 +20,10 @@ type InternalSwapRequest struct {
 func (p *Pool) CalcJoinValueWithoutSlippage(ctx sdk.Context, oracleKeeper OracleKeeper, accountedPoolKeeper AccountedPoolKeeper, tokensIn sdk.Coins) (math.LegacyDec, error) {
 	joinValue := sdk.ZeroDec()
 	for _, asset := range tokensIn {
-		tokenPrice := oracleKeeper.GetAssetPriceFromDenom(ctx, asset.Denom)
+		tokenPrice, err := oracleKeeper.GetExchangeRate(ctx, asset.Denom)
+		if err != nil {
+			return sdk.ZeroDec(), err
+		}
 		if tokenPrice.IsZero() {
 			return sdk.ZeroDec(), fmt.Errorf("token price not set: %s", asset.Denom)
 		}

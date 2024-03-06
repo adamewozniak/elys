@@ -9,10 +9,7 @@ import (
 )
 
 func (oq *Querier) queryParams(ctx sdk.Context, req *oracletypes.QueryParamsRequest) ([]byte, error) {
-	res, err := oq.keeper.Params(ctx, req)
-	if err != nil {
-		return nil, errorsmod.Wrap(err, "failed to query params")
-	}
+	res := oq.keeper.GetParams(ctx)
 
 	responseBytes, err := json.Marshal(res)
 	if err != nil {

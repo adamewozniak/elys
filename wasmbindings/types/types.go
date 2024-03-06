@@ -28,7 +28,6 @@ import (
 	incentivetypes "github.com/elys-network/elys/x/incentive/types"
 	leveragelpkeeper "github.com/elys-network/elys/x/leveragelp/keeper"
 	leveragelptypes "github.com/elys-network/elys/x/leveragelp/types"
-	oraclekeeper "github.com/elys-network/elys/x/oracle/keeper"
 	oracletypes "github.com/elys-network/elys/x/oracle/types"
 	parameterkeeper "github.com/elys-network/elys/x/parameter/keeper"
 	parametertypes "github.com/elys-network/elys/x/parameter/types"
@@ -40,6 +39,7 @@ import (
 	tokenomicstypes "github.com/elys-network/elys/x/tokenomics/types"
 	transferhookkeeper "github.com/elys-network/elys/x/transferhook/keeper"
 	transferhooktypes "github.com/elys-network/elys/x/transferhook/types"
+	oraclekeeper "github.com/ojo-network/ojo/x/oracle/keeper"
 )
 
 // ModuleQuerier is an interface that all module queriers should implement.

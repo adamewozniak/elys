@@ -16,10 +16,10 @@ func TestCollectGasFeesToIncentiveModule(t *testing.T) {
 	app := simapp.InitElysTestApp(initChain)
 	ctx := app.BaseApp.NewContext(initChain, tmproto.Header{})
 
-	ik, bk, amm, oracle := app.IncentiveKeeper, app.BankKeeper, app.AmmKeeper, app.OracleKeeper
+	ik, bk, amm, _ := app.IncentiveKeeper, app.BankKeeper, app.AmmKeeper, app.OracleKeeper
 
 	// Setup coin prices
-	SetupStableCoinPrices(ctx, oracle)
+	// SetupStableCoinPrices(ctx, oracle)
 
 	// Collect gas fees
 	collectedAmt := ik.CollectGasFeesToIncentiveModule(ctx, ptypes.BaseCurrency)
@@ -96,13 +96,13 @@ func TestCollectDEXRevenueToIncentiveModule(t *testing.T) {
 	app := simapp.InitElysTestApp(initChain)
 	ctx := app.BaseApp.NewContext(initChain, tmproto.Header{})
 
-	ik, bk, amm, oracle := app.IncentiveKeeper, app.BankKeeper, app.AmmKeeper, app.OracleKeeper
+	ik, bk, amm, _ := app.IncentiveKeeper, app.BankKeeper, app.AmmKeeper, app.OracleKeeper
 
 	// Recalculate total committed info
 	ik.UpdateTotalCommitmentInfo(ctx, ptypes.BaseCurrency)
 
 	// Setup coin prices
-	SetupStableCoinPrices(ctx, oracle)
+	// SetupStableCoinPrices(ctx, oracle)
 
 	// Generate 1 random account with 1000stake balanced
 	addr := simapp.AddTestAddrs(app, ctx, 2, sdk.NewInt(1000000))

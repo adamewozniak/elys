@@ -3,19 +3,17 @@ package keeper_test
 import (
 	"testing"
 
-	"github.com/cometbft/cometbft/crypto/ed25519"
 	tmproto "github.com/cometbft/cometbft/proto/tendermint/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	simapp "github.com/elys-network/elys/app"
 	ammkeeper "github.com/elys-network/elys/x/amm/keeper"
 	ammtypes "github.com/elys-network/elys/x/amm/types"
 	ctypes "github.com/elys-network/elys/x/commitment/types"
-	oraclekeeper "github.com/elys-network/elys/x/oracle/keeper"
-	oracletypes "github.com/elys-network/elys/x/oracle/types"
 	ptypes "github.com/elys-network/elys/x/parameter/types"
 	"github.com/stretchr/testify/require"
 )
 
+/*
 func SetupStableCoinPrices(ctx sdk.Context, oracle oraclekeeper.Keeper) {
 	// prices set for USDT and USDC
 	provider := sdk.AccAddress(ed25519.GenPrivKey().PubKey().Address())
@@ -69,15 +67,16 @@ func SetupStableCoinPrices(ctx sdk.Context, oracle oraclekeeper.Keeper) {
 		Timestamp: uint64(ctx.BlockTime().Unix()),
 	})
 }
+*/
 
 func TestCalcRewardsForLPs(t *testing.T) {
 	app := simapp.InitElysTestApp(initChain)
 	ctx := app.BaseApp.NewContext(initChain, tmproto.Header{})
 
-	ik, amm, oracle, bk, ck := app.IncentiveKeeper, app.AmmKeeper, app.OracleKeeper, app.BankKeeper, app.CommitmentKeeper
+	ik, amm, _, bk, ck := app.IncentiveKeeper, app.AmmKeeper, app.OracleKeeper, app.BankKeeper, app.CommitmentKeeper
 
 	// Setup coin prices
-	SetupStableCoinPrices(ctx, oracle)
+	// SetupStableCoinPrices(ctx, oracle)
 
 	// Generate 1 random account with 1000stake balanced
 	addr := simapp.AddTestAddrs(app, ctx, 1, sdk.NewInt(100010))

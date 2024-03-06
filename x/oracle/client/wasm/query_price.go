@@ -10,7 +10,7 @@ import (
 
 func (oq *Querier) queryPrice(ctx sdk.Context, req *oracletypes.QueryGetPriceRequest) ([]byte, error) {
 	// Calling the PriceAll function and handling its response
-	res, err := oq.keeper.Price(ctx, req)
+	res, err := oq.keeper.GetExchangeRate(ctx, req.Asset)
 	if err != nil {
 		return nil, errorsmod.Wrap(err, "failed to get price")
 	}

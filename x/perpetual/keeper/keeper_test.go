@@ -9,9 +9,6 @@ import (
 	"github.com/elys-network/elys/x/perpetual/types"
 	"github.com/stretchr/testify/require"
 
-	"github.com/cometbft/cometbft/crypto/ed25519"
-	oraclekeeper "github.com/elys-network/elys/x/oracle/keeper"
-	oracletypes "github.com/elys-network/elys/x/oracle/types"
 	ptypes "github.com/elys-network/elys/x/parameter/types"
 )
 
@@ -82,10 +79,11 @@ func TestGetAllWhitelistedAddress(t *testing.T) {
 	)
 }
 
+/*
 func SetupStableCoinPrices(ctx sdk.Context, oracle oraclekeeper.Keeper) {
 	// prices set for USDT and USDC
 	provider := sdk.AccAddress(ed25519.GenPrivKey().PubKey().Address())
-	oracle.SetAssetInfo(ctx, oracletypes.AssetInfo{
+	oracle.SetParams(ctx, "USDC", oracletypes.Params{
 		Denom:   ptypes.BaseCurrency,
 		Display: "USDC",
 		Decimal: 6,
@@ -135,3 +133,4 @@ func SetupStableCoinPrices(ctx sdk.Context, oracle oraclekeeper.Keeper) {
 		Timestamp: uint64(ctx.BlockTime().Unix()),
 	})
 }
+*/

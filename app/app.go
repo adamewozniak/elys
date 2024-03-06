@@ -57,6 +57,8 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/crisis"
 	crisiskeeper "github.com/cosmos/cosmos-sdk/x/crisis/keeper"
 	crisistypes "github.com/cosmos/cosmos-sdk/x/crisis/types"
+	distrkeeper "github.com/cosmos/cosmos-sdk/x/distribution/keeper"
+	distrtypes "github.com/cosmos/cosmos-sdk/x/distribution/types"
 	"github.com/cosmos/cosmos-sdk/x/evidence"
 	evidencekeeper "github.com/cosmos/cosmos-sdk/x/evidence/keeper"
 	evidencetypes "github.com/cosmos/cosmos-sdk/x/evidence/types"
@@ -129,9 +131,9 @@ import (
 	epochsmodule "github.com/elys-network/elys/x/epochs"
 	epochsmodulekeeper "github.com/elys-network/elys/x/epochs/keeper"
 	epochsmoduletypes "github.com/elys-network/elys/x/epochs/types"
-	oraclemodule "github.com/elys-network/elys/x/oracle"
-	oraclekeeper "github.com/elys-network/elys/x/oracle/keeper"
-	oracletypes "github.com/elys-network/elys/x/oracle/types"
+	oraclemodule "github.com/ojo-network/ojo/x/oracle"
+	oraclekeeper "github.com/ojo-network/ojo/x/oracle/keeper"
+	oracletypes "github.com/ojo-network/ojo/x/oracle/types"
 	"github.com/spf13/cast"
 
 	tokenomicsmodule "github.com/elys-network/elys/x/tokenomics"
@@ -344,6 +346,7 @@ type ElysApp struct {
 	AuthzKeeper           authzkeeper.Keeper
 	BankKeeper            bankkeeper.Keeper
 	CapabilityKeeper      *capabilitykeeper.Keeper
+	DistrKeeper           distrkeeper.Keeper
 	StakingKeeper         *stakingkeeper.Keeper
 	SlashingKeeper        slashingkeeper.Keeper
 	MintKeeper            mintkeeper.Keeper
@@ -692,18 +695,19 @@ func NewElysApp(
 
 	scopedOracleKeeper := app.CapabilityKeeper.ScopeToModule(oracletypes.ModuleName)
 	app.ScopedOracleKeeper = scopedOracleKeeper
-	app.OracleKeeper = *oraclekeeper.NewKeeper(
+	app.OracleKeeper = oraclekeeper.NewKeeper(
 		appCodec,
-		keys[oracletypes.StoreKey],
-		keys[oracletypes.MemStoreKey],
+		keys[oracletypes.ModuleName],
 		app.GetSubspace(oracletypes.ModuleName),
-		app.IBCKeeper.ChannelKeeper,
-		&app.IBCKeeper.PortKeeper,
-		scopedOracleKeeper,
+		app.AccountKeeper,
+		app.BankKeeper,
+		app.DistrKeeper,
+		app.StakingKeeper,
+		distrtypes.ModuleName,
+		cast.ToBool(appOpts.Get("telemetry.enabled")),
+		authtypes.NewModuleAddress(govtypes.ModuleName).String(),
 	)
 	oracleModule := oraclemodule.NewAppModule(appCodec, app.OracleKeeper, app.AccountKeeper, app.BankKeeper)
-
-	oracleIBCModule := oraclemodule.NewIBCModule(app.OracleKeeper)
 
 	app.AssetprofileKeeper = *assetprofilemodulekeeper.NewKeeper(
 		appCodec,
@@ -913,8 +917,7 @@ func NewElysApp(
 		AddRoute(govtypes.RouterKey, govv1beta1.ProposalHandler).
 		AddRoute(paramproposal.RouterKey, params.NewParamChangeProposalHandler(app.ParamsKeeper)).
 		AddRoute(upgradetypes.RouterKey, upgrade.NewSoftwareUpgradeProposalHandler(app.UpgradeKeeper)).
-		AddRoute(ibcclienttypes.RouterKey, ibcclient.NewClientProposalHandler(app.IBCKeeper.ClientKeeper)).
-		AddRoute(oracletypes.RouterKey, oraclemodule.NewAssetInfoProposalHandler(&app.OracleKeeper))
+		AddRoute(ibcclienttypes.RouterKey, ibcclient.NewClientProposalHandler(app.IBCKeeper.ClientKeeper))
 
 	// The gov proposal types can be individually enabled
 	if len(enabledProposals) != 0 {
@@ -976,8 +979,7 @@ func NewElysApp(
 	ibcRouter := ibcporttypes.NewRouter()
 	ibcRouter.AddRoute(icahosttypes.SubModuleName, icaHostIBCModule).
 		AddRoute(ibctransfertypes.ModuleName, transferStack).
-		AddRoute(wasmmoduletypes.ModuleName, wasmStack).
-		AddRoute(oracletypes.ModuleName, oracleIBCModule)
+		AddRoute(wasmmoduletypes.ModuleName, wasmStack)
 	// this line is used by starport scaffolding # ibc/app/router
 	app.IBCKeeper.SetRouter(ibcRouter)
 
@@ -1012,7 +1014,6 @@ func NewElysApp(
 	app.EpochsKeeper = *app.EpochsKeeper.SetHooks(
 		epochsmodulekeeper.NewMultiEpochHooks(
 			// insert epoch hooks receivers here
-			app.OracleKeeper.Hooks(),
 			app.CommitmentKeeper.Hooks(),
 			app.BurnerKeeper.Hooks(),
 			app.PerpetualKeeper.Hooks(),

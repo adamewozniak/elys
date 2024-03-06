@@ -14,7 +14,7 @@ func (suite *KeeperTestSuite) TestCalcInRouteSpotPrice() {
 	senderInitBalance := sdk.Coins{sdk.NewInt64Coin(ptypes.Elys, 1000000), sdk.NewInt64Coin(ptypes.BaseCurrency, 1000000)}
 
 	suite.SetupTest()
-	suite.SetupStableCoinPrices()
+	// suite.SetupStableCoinPrices()
 
 	// bootstrap accounts
 	sender := sdk.AccAddress(ed25519.GenPrivKey().PubKey().Address())

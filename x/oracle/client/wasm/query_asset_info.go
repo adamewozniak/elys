@@ -9,10 +9,7 @@ import (
 )
 
 func (oq *Querier) queryAssetInfo(ctx sdk.Context, req *oracletypes.QueryGetAssetInfoRequest) ([]byte, error) {
-	res, err := oq.keeper.AssetInfo(ctx, req)
-	if err != nil {
-		return nil, errorsmod.Wrap(err, "failed to query asset info")
-	}
+	res := oq.keeper.GetParams(ctx)
 
 	responseBytes, err := json.Marshal(res)
 	if err != nil {

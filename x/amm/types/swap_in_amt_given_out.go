@@ -25,11 +25,17 @@ func (p Pool) CalcGivenOutSlippage(
 	}
 
 	// ensure token prices for in/out tokens set properly
-	inTokenPrice := oracleKeeper.GetAssetPriceFromDenom(ctx, tokenInDenom)
+	inTokenPrice, err := oracleKeeper.GetExchangeRate(ctx, tokenInDenom)
+	if err != nil {
+		return sdk.ZeroDec(), err
+	}
 	if inTokenPrice.IsZero() {
 		return sdk.ZeroDec(), fmt.Errorf("price for inToken not set: %s", poolAssetIn.Token.Denom)
 	}
-	outTokenPrice := oracleKeeper.GetAssetPriceFromDenom(ctx, tokenOut.Denom)
+	outTokenPrice, err := oracleKeeper.GetExchangeRate(ctx, tokenInDenom)
+	if err != nil {
+		return sdk.ZeroDec(), err
+	}
 	if outTokenPrice.IsZero() {
 		return sdk.ZeroDec(), fmt.Errorf("price for outToken not set: %s", poolAssetOut.Token.Denom)
 	}
@@ -71,11 +77,17 @@ func (p *Pool) SwapInAmtGivenOut(
 	}
 
 	// ensure token prices for in/out tokens set properly
-	inTokenPrice := oracleKeeper.GetAssetPriceFromDenom(ctx, tokenInDenom)
+	inTokenPrice, err := oracleKeeper.GetExchangeRate(ctx, tokenInDenom)
+	if err != nil {
+		return sdk.Coin{}, sdk.ZeroDec(), sdk.ZeroDec(), sdk.ZeroDec(), err
+	}
 	if inTokenPrice.IsZero() {
 		return sdk.Coin{}, sdk.ZeroDec(), sdk.ZeroDec(), sdk.ZeroDec(), fmt.Errorf("price for inToken not set: %s", poolAssetIn.Token.Denom)
 	}
-	outTokenPrice := oracleKeeper.GetAssetPriceFromDenom(ctx, tokenOut.Denom)
+	outTokenPrice, err := oracleKeeper.GetExchangeRate(ctx, tokenInDenom)
+	if err != nil {
+		return sdk.Coin{}, sdk.ZeroDec(), sdk.ZeroDec(), sdk.ZeroDec(), err
+	}
 	if outTokenPrice.IsZero() {
 		return sdk.Coin{}, sdk.ZeroDec(), sdk.ZeroDec(), sdk.ZeroDec(), fmt.Errorf("price for outToken not set: %s", poolAssetOut.Token.Denom)
 	}

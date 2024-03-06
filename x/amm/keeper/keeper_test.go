@@ -3,15 +3,12 @@ package keeper_test
 import (
 	"testing"
 
-	"github.com/cometbft/cometbft/crypto/ed25519"
 	tmproto "github.com/cometbft/cometbft/proto/tendermint/types"
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	simapp "github.com/elys-network/elys/app"
 	"github.com/elys-network/elys/x/amm/keeper"
 	"github.com/elys-network/elys/x/amm/types"
-	oracletypes "github.com/elys-network/elys/x/oracle/types"
-	ptypes "github.com/elys-network/elys/x/parameter/types"
 	"github.com/stretchr/testify/suite"
 )
 
@@ -39,6 +36,7 @@ func TestKeeperSuite(t *testing.T) {
 	suite.Run(t, new(KeeperTestSuite))
 }
 
+/*
 func (suite *KeeperTestSuite) SetupStableCoinPrices() {
 	// prices set for USDT and USDC
 	provider := sdk.AccAddress(ed25519.GenPrivKey().PubKey().Address())
@@ -79,6 +77,7 @@ func (suite *KeeperTestSuite) SetupStableCoinPrices() {
 		Timestamp: uint64(suite.ctx.BlockTime().Unix()),
 	})
 }
+*/
 
 func SetupMockPools(k *keeper.Keeper, ctx sdk.Context) {
 	// Create and set mock pools

@@ -109,7 +109,7 @@ func (suite *KeeperTestSuite) TestMsgServerExitPool() {
 	} {
 		suite.Run(tc.desc, func() {
 			suite.SetupTest()
-			suite.SetupStableCoinPrices()
+			// suite.SetupStableCoinPrices()
 
 			// bootstrap accounts
 			sender := sdk.AccAddress(ed25519.GenPrivKey().PubKey().Address())

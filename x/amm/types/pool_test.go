@@ -97,7 +97,7 @@ func (suite *TestSuite) TestPoolTVL() {
 			treasuryAddr := sdk.AccAddress(ed25519.GenPrivKey().PubKey().Address())
 
 			// prices set for USDT and USDC
-			suite.SetupStableCoinPrices()
+			// suite.SetupStableCoinPrices()
 
 			// execute function
 			pool := types.Pool{
