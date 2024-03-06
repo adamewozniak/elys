@@ -364,64 +364,6 @@ genesis:
             communityFund: 9999999
             strategicReserve: 9999999
             teamTokensVested: 9999999
-    oracle:
-      assetInfos:
-        - denom: "satoshi"
-          display: "BTC"
-          bandTicker: "BTC"
-          elysTicker: "BTC"
-          decimal: 9
-        - denom: "wei"
-          display: "ETH"
-          bandTicker: "ETH"
-          elysTicker: "ETH"
-          decimal: 18
-        - denom: "uatom"
-          display: "ATOM"
-          bandTicker: "ATOM"
-          elysTicker: "ATOM"
-          decimal: 6
-        - denom: "uusdt"
-          display: "USDT"
-          bandTicker: "USDT"
-          elysTicker: "USDT"
-          decimal: 6
-        - denom: "uusdc"
-          display: "USDC"
-          bandTicker: "USDC"
-          elysTicker: "USDC"
-          decimal: 6
-      params:
-        ask_count: "4"
-        band_channel_source: "channel-0"
-        band_epoch: "band_epoch"
-        client_id: "band_price_id"
-        execute_gas: "600000"
-        fee_limit:
-          - amount: "30"
-            denom: "uband"
-        min_count: "3"
-        multiplier: "18"
-        oracle_script_id: "37"
-        prepare_gas: "600000"
-        price_expiry_time: "86400"
-      portId: "oracle"
-      priceFeeders:
-        - feeder: "elys12tzylat4udvjj56uuhu3vj2n4vgp7cf9fwna9w"
-          is_active: true
-        - feeder: "elys1v30pe777dj9mgsnlv0j2c5wh05m0ya0nlhuv7t"
-          is_active: true
-      prices:
-        - asset: USDT
-          price: "1.00"
-          provider: elys12tzylat4udvjj56uuhu3vj2n4vgp7cf9fwna9w
-          source: elys
-          timestamp: "1694743319"
-        - asset: USDC
-          price: "1.00"
-          provider: elys12tzylat4udvjj56uuhu3vj2n4vgp7cf9fwna9w
-          source: elys
-          timestamp: "1694743319"
     burner:
       params:
         epochIdentifier: day
