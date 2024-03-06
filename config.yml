@@ -117,17 +117,6 @@ genesis:
           symbol: eden
           description: Eden token definition
           display: eden
-      balances:
-        - address: elys1w9uac4zrf9z7qd604qxk2y4n74568lfl8vutz4
-          coins:
-            - amount: "1000000000"
-              denom: uatom
-            - amount: "1000000000"
-              denom: ueden
-            - amount: "1000000000"
-              denom: uelys
-            - amount: "1000000000"
-              denom: uusdc
     assetprofile:
       entryList:
         - address: ""
